@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>service worker</title>
+  <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
+</head>
+<body>
+  <h3>Hello service worker</h3>
+  <script>
+    // 判断是否支持serviceWorker
+    if ('serviceWorker' in navigator) {
+      // 在window.onload中注册，防止与其他资源竞争
+      window.addEventListener('load', function () {
+            //  scope 参数是可选的，用于指定你想让 Service Worker 控制的内容的子目录
+            navigator.serviceWorker.register('/sw.js', {scope: '/'})
+                .then(function (registration) {
+                    // 注册成功
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                })
+                .catch(function (err) {
+                    // 注册失败:(
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
+  </script>
+</body>
+</html>

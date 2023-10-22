@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pwa manifest demo</title>
+  <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
+</head>
+<body>
+  <div>Hello Notification</div>
+  <div>你好呀</div>
+  <script>
+    // 判断有没有权限，默认状态下，请求授权
+    if (Notification && Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+    setTimeout(() => {
+      if (!Notification) return
+      const n = new Notification('提醒', { body: '这是一个广告通知', image: './icons/favicon.ico' })
+      n.onclick = () => {
+        window.open('https://baidu.com')
+        n.close()
+      }
+    }, 2000)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js', {scope: '/'})
+                .then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                })
+                .catch(function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
+    
+  </script>
+</body>
+</html>
